@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCA Image Compression</title>
+    <!-- Hanya menggunakan CSS Kustom KITA -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<div class="app-container">
+    <h2 class="page-title text-center">Kompresi Gambar PCA</h2>
+    
+    <!-- Form Input -->
+    <div class="card">
+        <form id="compressionForm">
+            <div class="form-group">
+                <label for="imageInput">1. Pilih Gambar</label>
+                <input type="file" id="imageInput" name="image" accept="image/png, image/jpeg" required>
+            </div>
+            <div class="form-group">
+                <label for="kValueInput">2. Tingkat Kompresi (Jumlah Komponen / K)</label>
+                <input type="number" id="kValueInput" name="k_value" value="50" min="1" required>
+                <small class="form-text">Nilai K yang lebih kecil menghasilkan ukuran file yang lebih kecil, namun gambar akan lebih buram.</small>
+            </div>
+            <button type="submit" class="btn btn-primary">Kompres Gambar</button>
+        </form>
+    </div>
+
+    <!-- Indikator Loading -->
+    <div id="loadingIndicator" class="loading-container d-none text-center">
+        <div class="spinner"></div>
+        <p>Memproses algoritma PCA... Harap tunggu.</p>
+    </div>
+
+    <!-- Tampilan Hasil -->
+    <div id="resultSection" class="card result-card d-none">
+        <div class="card-header bg-success">
+            <h3>Hasil Kompresi</h3>
+        </div>
+        
+        <div class="card-body">
+            <!-- Flexbox untuk Gambar (Kiri - Kanan) -->
+            <div class="preview-container">
+                <div class="image-box">
+                    <h4>Gambar Asli</h4>
+                    <img id="originalImage" src="" alt="Asli" class="img-preview">
+                </div>
+                <div class="image-box">
+                    <h4>Gambar Hasil Kompresi</h4>
+                    <img id="compressedImage" src="" alt="Kompresi" class="img-preview">
+                </div>
+            </div>
+            
+            <hr class="divider">
+            
+            <!-- Flexbox untuk Metrik -->
+            <div class="metrics-container">
+                <div class="metric-box">
+                    <p class="text-muted">Runtime</p>
+                    <h3 id="metricRuntime">-</h3>
+                </div>
+                <div class="metric-box">
+                    <p class="text-muted">Ukuran Awal</p>
+                    <h3 id="metricOriginal">-</h3>
+                </div>
+                <div class="metric-box">
+                    <p class="text-muted">Ukuran Akhir</p>
+                    <h3 id="metricCompressed">-</h3>
+                </div>
+                <div class="metric-box">
+                    <p class="text-muted">Efisiensi</p>
+                    <h3 id="metricRatio" class="text-success">-</h3>
+                </div>
+            </div>
+
+            <!-- Tombol Unduh -->
+            <div class="download-container text-center">
+                <a id="downloadBtn" href="#" class="btn btn-success">Unduh Hasil Kompresi</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/script.js"></script>
+</body>
+</html>

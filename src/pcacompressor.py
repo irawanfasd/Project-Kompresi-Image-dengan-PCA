@@ -1,7 +1,7 @@
 import cv2
 import numpy as np 
 
-def compress_image(img, num_PC):
+def pca_processing(img, num_PC):
 
     #ngetung rata2
     M = np.mean(img.T, axis=1)
@@ -27,22 +27,21 @@ def compress_image(img, num_PC):
     constructed_img = np.clip(constructed_img.real, 0, 255).astype(np.uint8)
     return constructed_img
 
+def compress_image(input_file, output_file, tingkat_kompresi):
+    #lokasi nyang folder sik podo ro code py ne
+    
+    img_array = cv2.imread(input_file)
 
-#lokasi nyang folder sik podo ro code py ne
-imgpath ="wp1827100.jpg"
-img_array = cv2.imread(imgpath)
-tingkat_kompresi = 50
+    #mbagi dadi 3 (biru, ijo, abang)
+    b, g, r = cv2.split(img_array)
 
-#mbagi dadi 3 (biru, ijo, abang)
-b, g, r = cv2.split(img_array)
+    #proses kompres 
+    b_compressed = pca_processing(b, tingkat_kompresi)
+    g_compressed = pca_processing(g, tingkat_kompresi)
+    r_compressed = pca_processing(r, tingkat_kompresi)
 
-#proses kompres 
-b_compressed = compress_image(b, tingkat_kompresi)
-g_compressed = compress_image(g, tingkat_kompresi)
-r_compressed = compress_image(r, tingkat_kompresi)
+    #biru, ijo, abang digabung
+    reconstructed_img = cv2.merge((b_compressed, g_compressed, r_compressed))
 
-#biru, ijo, abang digabung
-reconstructed_img = cv2.merge((b_compressed, g_compressed, r_compressed))
-
-#output file
-cv2.imwrite("Compressed_image.jpg", reconstructed_img)
+    #output file
+    cv2.imwrite(output_file, reconstructed_img)
