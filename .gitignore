@@ -1,0 +1,9 @@
+venv/
+src/__pycache__/
+*.pyc
+src/flask.log
+*.bak
+src/test/input/*
+src/test/output/*
+!src/test/input/.gitkeep
+!src/test/output/.gitkeep

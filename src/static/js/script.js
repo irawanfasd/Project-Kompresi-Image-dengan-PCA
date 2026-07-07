@@ -14,10 +14,10 @@ document.getElementById('compressionForm').addEventListener('submit', function(e
     submitBtn.disabled = true;
 
     // Mengirim data ke backend Flask menggunakan Fetch API
-    fetch('/compress', {
-        method: 'POST',
-        body: formData
-    })
+fetch('/pca/compress', {
+    method: 'POST',
+    body: formData
+})
     .then(response => response.json())
     .then(data => {
         // Sembunyikan loading dan aktifkan tombol kembali
@@ -28,19 +28,15 @@ document.getElementById('compressionForm').addEventListener('submit', function(e
             // Memasukkan URL gambar ke dalam tag <img>
             // Tambahkan timestamp untuk mencegah browser menyimpan cache gambar lama
             const timeStamp = new Date().getTime();
-            document.getElementById('originalImage').src = data.original_url + "?t=" + timeStamp;
-            document.getElementById('compressedImage').src = data.compressed_url + "?t=" + timeStamp;
-
+document.getElementById('originalImage').src = "/pca" + data.original_url + "?t=" + timeStamp;
+document.getElementById('compressedImage').src = "/pca" + data.compressed_url + "?t=" + timeStamp;
             // Memperbarui teks metrik
             document.getElementById('metricRuntime').textContent = data.metrics.runtime + " dtk";
             document.getElementById('metricOriginal').textContent = data.metrics.original_size_kb + " KB";
             document.getElementById('metricCompressed').textContent = data.metrics.compressed_size_kb + " KB";
-            document.getElementById('metricRatio').textContent = data.metrics.compression_ratio + "%";
-
+document.getElementById('metricRatio').textContent = data.metrics.compress_ratio + "%";
             // Mengatur tautan tombol unduh
-            document.getElementById('downloadBtn').href = "/download/" + data.filename;
-
-            // Tampilkan bagian hasil
+document.getElementById('downloadBtn').href = "/pca/download/" + data.filename;            // Tampilkan bagian hasil
             resultSection.classList.remove('d-none');
         } else {
             alert("Error: " + data.error);
